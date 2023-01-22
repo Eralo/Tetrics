@@ -65,7 +65,7 @@ namespace Tetrics
                         Height = CellSize
                     };
 
-                    Canvas.SetTop(imageControl, (x - 2) * CellSize);
+                    Canvas.SetTop(imageControl, (x - 2) * CellSize + 10);
                     Canvas.SetLeft(imageControl, y * CellSize);
                     GameCanvas.Children.Add(imageControl);
                     imageControls[x, y] = imageControl;
@@ -99,6 +99,19 @@ namespace Tetrics
         }
 
 
+        private async Task GameLoop() {
+
+            Draw(gameState);
+
+            while (!gameState.GameOver) {
+                await Task.Delay(500);
+                gameState.MoveBlockDown();
+                Draw(gameState);
+            }
+            GameOverMenu.Visibility = Visibility.Visible;
+        }
+
+
         private void Window_KeyDown(object sender, KeyEventArgs e) {
 
             if (gameState.GameOver) return;
@@ -126,12 +139,15 @@ namespace Tetrics
             Draw(gameState);
         }
 
-        private void GameCanvas_Loaded(object sender, RoutedEventArgs e) {
-            Draw(gameState);
+        private async void GameCanvas_Loaded(object sender, RoutedEventArgs e) {
+            await GameLoop();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e) {
+        private async void Button_Click(object sender, RoutedEventArgs e) {
 
+            gameState = new GameState();
+            GameOverMenu.Visibility = Visibility.Hidden;
+            await GameLoop();
         }
     }
 }
