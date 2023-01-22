@@ -20,12 +20,117 @@ namespace Tetrics
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly ImageSource[] tileImages = new ImageSource[] {
+
+            new BitmapImage(new Uri("Assets/TileEmpty.png", UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/TileCyan.png", UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/TileBlue.png", UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/TileOrange.png", UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/TileYellow.png", UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/TileGreen.png", UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/TilePurple.png", UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/TileRed.png", UriKind.Relative))
+        };
+
+        private readonly ImageSource[] blockImages = new ImageSource[] {
+
+            new BitmapImage(new Uri("Assets/Block-Empty.png", UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/Block-I.png", UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/Block-J.png", UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/Block-L.png", UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/Block-O.png", UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/Block-S.png", UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/Block-T.png", UriKind.Relative)),
+            new BitmapImage(new Uri("Assets/Block-Z.png", UriKind.Relative)),
+        };
+
+        private readonly Image[,] imageControls;
+
+        private GameState gameState = new GameState();
         public MainWindow()
         {
             InitializeComponent();
+            imageControls = SetupGameCanvas(gameState.GameGrid);
         }
 
+        private Image[,] SetupGameCanvas(GameGrid grid) {
+
+            Image[,] imageControls = new Image[grid.Rows, grid.Columns];
+            int CellSize = 25;
+
+            for (int x=0; x < grid.Rows; x++) {
+                for (int y=0; y < grid.Columns; y++) {
+                    Image imageControl = new Image {
+                        Width = CellSize,
+                        Height = CellSize
+                    };
+
+                    Canvas.SetTop(imageControl, (x - 2) * CellSize);
+                    Canvas.SetLeft(imageControl, y * CellSize);
+                    GameCanvas.Children.Add(imageControl);
+                    imageControls[x, y] = imageControl;
+                }
+            }
+            return imageControls;
+        }
+
+        private void DrawGrid(GameGrid grid) {
+            
+            for (int x =0; x < grid.Rows; x++) {
+
+                for (int y = 0; y < grid.Columns;y++) {
+                    int id = grid[x, y];
+                    imageControls[x, y].Source = tileImages[id];
+                }
+            }
+        }
+
+        private void DrawBlock(Block block) {
+
+            foreach (Position p in block.TilePositions()) {
+                
+                imageControls[p.Row, p.Column].Source = tileImages[block.Id];
+            }
+        }
+
+        private void Draw(GameState gameState) {
+            DrawGrid(gameState.GameGrid);
+            DrawBlock(gameState.CurrentBlock);
+        }
+
+
         private void Window_KeyDown(object sender, KeyEventArgs e) {
+
+            if (gameState.GameOver) return;
+
+            switch (e.Key) {
+
+                case Key.Left:
+                    gameState.MoveBlockleft();
+                    break;
+                case Key.Right:
+                    gameState.MoveBlockRight();
+                    break;
+                case Key.Down:
+                    gameState.MoveBlockDown();
+                    break;
+                case Key.Up:
+                    gameState.RotateBlock();
+                    break;
+                case Key.X:
+                    gameState.RotateInverseBlock();
+                    break;
+                default:
+                    return;
+            }
+            Draw(gameState);
+        }
+
+        private void GameCanvas_Loaded(object sender, RoutedEventArgs e) {
+            Draw(gameState);
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e) {
 
         }
     }
