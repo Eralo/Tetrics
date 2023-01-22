@@ -19,3 +19,4 @@ C:\Users\damie\Desktop\repos2\Tetrics\Tetrics\obj\Debug\net6.0-windows\refint\Te
 C:\Users\damie\Desktop\repos2\Tetrics\Tetrics\obj\Debug\net6.0-windows\Tetrics.pdb
 C:\Users\damie\Desktop\repos2\Tetrics\Tetrics\obj\Debug\net6.0-windows\Tetrics.genruntimeconfig.cache
 C:\Users\damie\Desktop\repos2\Tetrics\Tetrics\obj\Debug\net6.0-windows\ref\Tetrics.dll
+C:\Users\damie\Desktop\repos2\Tetrics\Tetrics\obj\Debug\net6.0-windows\Tetrics_Content.g.cs

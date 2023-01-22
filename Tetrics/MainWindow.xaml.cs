@@ -45,6 +45,9 @@ namespace Tetrics
         };
 
         private readonly Image[,] imageControls;
+        private readonly int maxDelay = 1000;
+        private readonly int minDelay = 75;
+        private readonly int DelayDecrease = 25;
 
         private GameState gameState = new GameState();
         public MainWindow()
@@ -80,6 +83,7 @@ namespace Tetrics
 
                 for (int y = 0; y < grid.Columns;y++) {
                     int id = grid[x, y];
+                    imageControls[x, y].Opacity = 1;
                     imageControls[x, y].Source = tileImages[id];
                 }
             }
@@ -88,14 +92,38 @@ namespace Tetrics
         private void DrawBlock(Block block) {
 
             foreach (Position p in block.TilePositions()) {
-                
+                imageControls[p.Row, p.Column].Opacity = 1;
                 imageControls[p.Row, p.Column].Source = tileImages[block.Id];
+            }
+        }
+
+        private void DrawNextBlock(BlockQueue blockQueue) {
+            Block next = blockQueue.NextBlock;
+            NextImage.Source = blockImages[next.Id];
+        }
+
+        private void DrawHeldBlock(Block heldBlock) {
+
+            if (heldBlock == null) HoldImage.Source = blockImages[0];
+            else HoldImage.Source = blockImages[heldBlock.Id];
+        }
+
+        private void DrawGhostBlock(Block block) {
+            int dropDistance = gameState.BlockDropDistance();
+
+            foreach (Position p in block.TilePositions()) {
+                imageControls[p.Row + dropDistance, p.Column].Opacity = 0.25;
+                imageControls[p.Row + dropDistance, p.Column].Source = tileImages[block.Id];
             }
         }
 
         private void Draw(GameState gameState) {
             DrawGrid(gameState.GameGrid);
+            DrawGhostBlock(gameState.CurrentBlock);
             DrawBlock(gameState.CurrentBlock);
+            DrawNextBlock(gameState.BlockQueue);
+            DrawHeldBlock(gameState.HeldBlock);
+            ScoreText.Text = $"Score: {gameState.Score}";
         }
 
 
@@ -104,11 +132,15 @@ namespace Tetrics
             Draw(gameState);
 
             while (!gameState.GameOver) {
-                await Task.Delay(500);
+
+                int delay = Math.Max(minDelay, maxDelay - (gameState.Score * DelayDecrease));
+                await Task.Delay(delay);
                 gameState.MoveBlockDown();
                 Draw(gameState);
             }
+
             GameOverMenu.Visibility = Visibility.Visible;
+            FinalScoreText.Text = $"Score: {gameState.Score}";
         }
 
 
@@ -116,26 +148,47 @@ namespace Tetrics
 
             if (gameState.GameOver) return;
 
-            switch (e.Key) {
+            /*            switch (e.Key) {
 
-                case Key.Left:
-                    gameState.MoveBlockleft();
-                    break;
-                case Key.Right:
-                    gameState.MoveBlockRight();
-                    break;
-                case Key.Down:
-                    gameState.MoveBlockDown();
-                    break;
-                case Key.Up:
-                    gameState.RotateBlock();
-                    break;
-                case Key.X:
-                    gameState.RotateInverseBlock();
-                    break;
-                default:
-                    return;
-            }
+                            case Key.Left:
+                                gameState.MoveBlockleft();
+                                break;
+                            case Key.Right:
+                                gameState.MoveBlockRight();
+                                break;
+                            case Key.Down:
+                                gameState.MoveBlockDown();
+                                break;
+                            case Key.Up:
+                                gameState.RotateBlock();
+                                break;
+                            case Key.X:
+                                gameState.RotateInverseBlock();
+                                break;
+                            case Key.C:
+                                gameState.HoldBlock();
+                                break;
+                            case Key.Space:
+                                gameState.DropBlock();
+                                break;
+                            default:
+                                return;
+                        }*/  
+            bool up_key = Keyboard.IsKeyDown(Key.Up);
+            bool down_key = Keyboard.IsKeyDown(Key.Down);
+            bool left_key = Keyboard.IsKeyDown(Key.Left);
+            bool right_key = Keyboard.IsKeyDown(Key.Right);
+            bool x_key = Keyboard.IsKeyDown(Key.X);
+            bool c_key = Keyboard.IsKeyDown(Key.C);
+            bool space_key = Keyboard.IsKeyDown(Key.Space);
+
+            if (up_key) gameState.RotateBlock();
+            if (down_key) gameState.MoveBlockDown();
+            if (left_key) gameState.MoveBlockleft();
+            if (right_key) gameState.MoveBlockRight();
+            if (x_key) gameState.RotateInverseBlock();
+            if (c_key) gameState.HoldBlock();
+            if (space_key) gameState.DropBlock();
             Draw(gameState);
         }
 
