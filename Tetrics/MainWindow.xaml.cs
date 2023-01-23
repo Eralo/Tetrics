@@ -148,32 +148,6 @@ namespace Tetrics
 
             if (gameState.GameOver) return;
 
-            /*            switch (e.Key) {
-
-                            case Key.Left:
-                                gameState.MoveBlockleft();
-                                break;
-                            case Key.Right:
-                                gameState.MoveBlockRight();
-                                break;
-                            case Key.Down:
-                                gameState.MoveBlockDown();
-                                break;
-                            case Key.Up:
-                                gameState.RotateBlock();
-                                break;
-                            case Key.X:
-                                gameState.RotateInverseBlock();
-                                break;
-                            case Key.C:
-                                gameState.HoldBlock();
-                                break;
-                            case Key.Space:
-                                gameState.DropBlock();
-                                break;
-                            default:
-                                return;
-                        }*/  
             bool up_key = Keyboard.IsKeyDown(Key.Up);
             bool down_key = Keyboard.IsKeyDown(Key.Down);
             bool left_key = Keyboard.IsKeyDown(Key.Left);

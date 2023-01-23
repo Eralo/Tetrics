@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using Tetrics.Blocks;
 
 namespace Tetrics {
     public class BlockQueue {
@@ -14,7 +15,7 @@ namespace Tetrics {
             new Jblock(),
             new Lblock(),
             new Oblock(),
-            new Sblock(),
+            new Sblock(), 
             new Tblock(),
             new Zblock()
         };

@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tetrics {
-    public class Zblock : Block {
+namespace Tetrics.Blocks
+{
+    public class Zblock : Block
+    {
 
         private readonly Position[][] tiles = new Position[][] {
 
