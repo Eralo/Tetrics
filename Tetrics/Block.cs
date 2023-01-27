@@ -5,6 +5,7 @@ using System.Runtime.ExceptionServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace Tetrics {
     public abstract class Block {
@@ -46,7 +47,7 @@ namespace Tetrics {
             }
         }
 
-        public void Move(int x, int y) {
+        public void Move(int x, int y, int row=0, int col=0) {
 
             offset.Row += x;
             offset.Column += y;
