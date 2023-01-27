@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -43,6 +46,8 @@ namespace Tetrics
             new BitmapImage(new Uri("Assets/Block-T.png", UriKind.Relative)),
             new BitmapImage(new Uri("Assets/Block-Z.png", UriKind.Relative)),
         };
+
+        private readonly MediaPlayer mediaPlayer = new MediaPlayer();
 
         private readonly Image[,] imageControls;
         private readonly int maxDelay = 1000;
@@ -118,6 +123,7 @@ namespace Tetrics
         }
 
         private void Draw(GameState gameState) {
+
             DrawGrid(gameState.GameGrid);
             DrawGhostBlock(gameState.CurrentBlock);
             DrawBlock(gameState.CurrentBlock);
@@ -126,8 +132,15 @@ namespace Tetrics
             ScoreText.Text = $"Score: {gameState.Score}";
         }
 
+        private void Game_Music() {
+            MediaPlayer mediaPlayer = new MediaPlayer();
+            mediaPlayer.Open(new Uri(System.Environment.CurrentDirectory + @"\Assets\music_theme.mp3"));
+            mediaPlayer.Play();
+        }
+			    
 
-        private async Task GameLoop() {
+
+    private async Task GameLoop() {
 
             Draw(gameState);
 
@@ -144,16 +157,10 @@ namespace Tetrics
         }
 
 
-        private void Window_KeyDown(object sender, KeyEventArgs e) {
+        private async void Window_KeyDown(object sender, KeyEventArgs e) {
 
             if (gameState.GameOver) _ = e.Handled;
 
-            /*            private void key_Down(object sender, KeyEventArgs e) {
-                            if (e.KeyCode == Key.A && !isAKeyDown) {
-                                isAKeyDown = true;
-                                // Do Stuff
-                            }
-                        }*/
             if (Keyboard.IsKeyDown(Key.Up)) gameState.RotateBlock();
             if (Keyboard.IsKeyDown(Key.Down)) gameState.MoveBlockDown();
             if (Keyboard.IsKeyDown(Key.Left)) gameState.MoveBlockleft();
@@ -162,6 +169,8 @@ namespace Tetrics
             if (Keyboard.IsKeyDown(Key.C)) gameState.HoldBlock();
             if (Keyboard.IsKeyDown(Key.Space)) gameState.DropBlock();
             Draw(gameState);
+
+            await Task.Delay(100);
         }
 
         private async void GameCanvas_Loaded(object sender, RoutedEventArgs e) {
@@ -169,9 +178,9 @@ namespace Tetrics
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e) {
-
             gameState = new GameState();
             GameOverMenu.Visibility = Visibility.Hidden;
+            Game_Music();
             await GameLoop();
         }
     }

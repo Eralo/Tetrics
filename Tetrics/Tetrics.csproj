@@ -54,4 +54,10 @@
     <Resource Include="Assets\TileYellow.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Assets\music_theme.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
