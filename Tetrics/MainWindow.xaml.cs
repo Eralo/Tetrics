@@ -146,23 +146,21 @@ namespace Tetrics
 
         private void Window_KeyDown(object sender, KeyEventArgs e) {
 
-            if (gameState.GameOver) return;
+            if (gameState.GameOver) _ = e.Handled;
 
-            bool up_key = Keyboard.IsKeyDown(Key.Up);
-            bool down_key = Keyboard.IsKeyDown(Key.Down);
-            bool left_key = Keyboard.IsKeyDown(Key.Left);
-            bool right_key = Keyboard.IsKeyDown(Key.Right);
-            bool x_key = Keyboard.IsKeyDown(Key.X);
-            bool c_key = Keyboard.IsKeyDown(Key.C);
-            bool space_key = Keyboard.IsKeyDown(Key.Space);
-
-            if (up_key) gameState.RotateBlock();
-            if (down_key) gameState.MoveBlockDown();
-            if (left_key) gameState.MoveBlockleft();
-            if (right_key) gameState.MoveBlockRight();
-            if (x_key) gameState.RotateInverseBlock();
-            if (c_key) gameState.HoldBlock();
-            if (space_key) gameState.DropBlock();
+            /*            private void key_Down(object sender, KeyEventArgs e) {
+                            if (e.KeyCode == Key.A && !isAKeyDown) {
+                                isAKeyDown = true;
+                                // Do Stuff
+                            }
+                        }*/
+            if (Keyboard.IsKeyDown(Key.Up)) gameState.RotateBlock();
+            if (Keyboard.IsKeyDown(Key.Down)) gameState.MoveBlockDown();
+            if (Keyboard.IsKeyDown(Key.Left)) gameState.MoveBlockleft();
+            if (Keyboard.IsKeyDown(Key.Right)) gameState.MoveBlockRight();
+            if (Keyboard.IsKeyDown(Key.X)) gameState.RotateInverseBlock();
+            if (Keyboard.IsKeyDown(Key.C)) gameState.HoldBlock();
+            if (Keyboard.IsKeyDown(Key.Space)) gameState.DropBlock();
             Draw(gameState);
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.ExceptionServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,9 +11,13 @@ namespace Tetrics {
 
         protected abstract Position[][] Tiles { get; }
         protected abstract Position StartOffset { get; }
+
+        public abstract int[][] Kick { get; }
+
         public abstract int Id { get; }
 
-        private int rotationState;
+        public int rotationState;
+
         private Position offset;
 
         public Block() {

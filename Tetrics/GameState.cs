@@ -73,14 +73,17 @@ namespace Tetrics {
         }
 
         public void RotateBlock() {
-            CurrentBlock.Rotate();
 
-            if (!BlockFits()) CurrentBlock.RotateInverse();
+            for (int i = 0; i < 8; i += 2) {        //because 8 positions (x,y) in each Kick array: we have to increment by 2
+                CurrentBlock.Move(CurrentBlock.Kick[CurrentBlock.rotationState][i], CurrentBlock.Kick[CurrentBlock.rotationState][i]);
+                CurrentBlock.Rotate();
+                if (!BlockFits()) CurrentBlock.RotateInverse();
+            }
         }
         public void RotateInverseBlock() {
             CurrentBlock.RotateInverse();
 
-            if (!BlockFits()) CurrentBlock.Rotate();
+            if (!BlockFits()) CurrentBlock.Rotate(); 
         }
 
 
@@ -104,7 +107,6 @@ namespace Tetrics {
             return !(GameGrid.IsRowEmpty(0) && GameGrid.IsRowEmpty(1));
         }
 
-        int i = 0;
         private void PlaceBlock() {
 
             foreach (Position p in CurrentBlock.TilePositions()) {
@@ -120,6 +122,7 @@ namespace Tetrics {
             }
         }
 
+        int i = 0;
         public void MoveBlockDown() {
 
             CurrentBlock.Move(1, 0);
@@ -127,9 +130,8 @@ namespace Tetrics {
             if (!BlockFits()) {
                 CurrentBlock.Move(-1, 0);
                 i++;
-                if (i>1) PlaceBlock();
+                if (i>Linger) PlaceBlock();
             }
-
         }
         
         private int TileDropDistance(Position p) {
