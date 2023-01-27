@@ -31,12 +31,15 @@ namespace Tetrics {
         public Block HeldBlock { get; private set; }
         public bool CanHold { get; private set; }
 
+        public int Linger { get; private set; }
+
         public GameState() {
 
             GameGrid = new GameGrid(22, 10);
             BlockQueue = new BlockQueue();
             CurrentBlock= BlockQueue.GetAndUpdate();
             CanHold = true;
+            Linger = 5;
         }
 
         private bool BlockFits() {
@@ -101,6 +104,7 @@ namespace Tetrics {
             return !(GameGrid.IsRowEmpty(0) && GameGrid.IsRowEmpty(1));
         }
 
+        int i = 0;
         private void PlaceBlock() {
 
             foreach (Position p in CurrentBlock.TilePositions()) {
@@ -108,12 +112,11 @@ namespace Tetrics {
             }
 
             Score += GameGrid.ClearFullRows();
-
             if (IsGameOver()) GameOver = true;
-
             else {
                 CurrentBlock = BlockQueue.GetAndUpdate();
                 CanHold = true;
+                i = 0;
             }
         }
 
@@ -123,7 +126,8 @@ namespace Tetrics {
 
             if (!BlockFits()) {
                 CurrentBlock.Move(-1, 0);
-                PlaceBlock();
+                i++;
+                if (i>1) PlaceBlock();
             }
 
         }
