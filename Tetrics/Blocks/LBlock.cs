@@ -20,16 +20,14 @@ namespace Tetrics.Blocks
         private readonly int[][] kick = new int[][] {      //kick is trying to fit the block while rotating by kicking it to a near location. The map:
 
             new int[] { -1,0, -1,1, 0,-2, -1,-2 }, //0 to 1
-            new int[] { 1,0, 1,-1, 0,2, 1,2 }, //1 to 0
-
             new int[] { 1,0, 1,-1, 0,2, 1,2 }, //1 to 2
-            new int[] { -1,0, -1,1, 0,-2, -1,-2 }, //2 to 1
-            
             new int[] { 1,0, 1,1, 0,2, 1,-2 }, //2 to 3
-            new int[] { -1,0, -1,-1, 0,2, -1,2 }, //3 to 2
-
             new int[] { -1,0, -1,-1, 0,2, -1,2 }, //3 to 0
+            
             new int[] { 1,0, 1,1, 0,-2, 1,-2 }, //0 to 3
+            new int[] { 1,0, 1,-1, 0,2, 1,2 }, //1 to 0
+            new int[] { -1,0, -1,1, 0,-2, -1,-2 }, //2 to 1
+            new int[] { -1,0, -1,-1, 0,2, -1,2 }, //3 to 2
         };
 
         public override int Id => 3;

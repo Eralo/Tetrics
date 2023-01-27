@@ -73,12 +73,11 @@ namespace Tetrics {
         }
 
         public void RotateBlock() {
-                                                             //SRS
+                                                             
             CurrentBlock.Rotate();
 
             if (BlockFits()) return;
-
-
+                                                        //SRS
             for (int i = 0; i < 8; i += 2) {    //2 positions in Kick array corresponding to x and y
                 if (i != 0) CurrentBlock.Move(CurrentBlock.Kick[CurrentBlock.rotationState][i], CurrentBlock.Kick[CurrentBlock.rotationState][i + 1]);
                 if (BlockFits()) return;
@@ -86,12 +85,20 @@ namespace Tetrics {
             }
 
             CurrentBlock.RotateInverse();
-
+    
         }
         public void RotateInverseBlock() {
+
             CurrentBlock.RotateInverse();
 
-            if (!BlockFits()) CurrentBlock.Rotate(); 
+            if (BlockFits()) return;
+                                                         //SRS
+            for (int i = 0; i < 8; i += 2) {    //2 positions in Kick array corresponding to x and y
+                if (i != 0) CurrentBlock.Move(CurrentBlock.Kick[CurrentBlock.rotationState+4][i], CurrentBlock.Kick[CurrentBlock.rotationState+4][i + 1]);
+                if (BlockFits()) return;
+                if (i != 0) CurrentBlock.Move(-CurrentBlock.Kick[CurrentBlock.rotationState+4][i], -CurrentBlock.Kick[CurrentBlock.rotationState+4][i + 1]);
+            }
+            CurrentBlock.Rotate();
         }
 
 
