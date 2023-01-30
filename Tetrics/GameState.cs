@@ -26,21 +26,23 @@ namespace Tetrics {
 
         public GameGrid GameGrid { get; }
         public BlockQueue BlockQueue { get; }
+        public Scoring Score { get; }
         public bool GameOver { get; private set; }
-        public int Score { get; private set; }
-
         public Block HeldBlock { get; private set; }
         public bool CanHold { get; private set; }
 
-        public int Linger { get; private set; }
+        public int Linger { get; private set; } = 5;
+
+        int CurrentLinger = 0;
+        public int Combo { get; private set; } = 0;
 
         public GameState() {
 
             GameGrid = new GameGrid(22, 10);
             BlockQueue = new BlockQueue();
+            Score = new Scoring();
             CurrentBlock= BlockQueue.GetAndUpdate();
             CanHold = true;
-            Linger = 5;
         }
 
         private bool BlockFits() {
@@ -71,6 +73,7 @@ namespace Tetrics {
             }
 
             CanHold= false;
+            CurrentLinger = 0;
         }
 
         public void RotateBlock() {
@@ -129,24 +132,27 @@ namespace Tetrics {
                 GameGrid[p.Row, p.Column] = currentBlock.Id;
             }
 
-            Score += GameGrid.ClearFullRows();
+            int i = GameGrid.ClearFullRows();
+            if (i == 0) Combo = 0;
+
+            Score.AddScore(i, Combo);
+
             if (IsGameOver()) GameOver = true;
             else {
                 CurrentBlock = BlockQueue.GetAndUpdate();
                 CanHold = true;
-                i = 0;
+                CurrentLinger = 0;
             }
         }
 
-        int i = 0;
         public void MoveBlockDown() {
 
             CurrentBlock.Move(1, 0);
 
             if (!BlockFits()) {
                 CurrentBlock.Move(-1, 0);
-                i++;
-                if (i>Linger) PlaceBlock();
+                CurrentLinger++;
+                if (CurrentLinger>Linger) PlaceBlock();
             }
         }
         
@@ -165,7 +171,10 @@ namespace Tetrics {
         }
 
         public void DropBlock() {
-            CurrentBlock.Move(BlockDropDistance(), 0);
+            int score = BlockDropDistance();
+            Score.Score += 2 * BlockDropDistance(); 
+
+            CurrentBlock.Move(score, 0);
             PlaceBlock();
         }
     }

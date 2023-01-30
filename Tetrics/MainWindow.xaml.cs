@@ -129,7 +129,9 @@ namespace Tetrics
             DrawBlock(gameState.CurrentBlock);
             DrawNextBlock(gameState.BlockQueue);
             DrawHeldBlock(gameState.HeldBlock);
-            ScoreText.Text = $"Score: {gameState.Score}";
+            ScoreText.Text = $"Score: {gameState.Score.Score}";
+            LevelText.Text = $"Level: {gameState.Score.Level}";
+            LinesText.Text = $"Lines left: {gameState.Score.LinesLeft()}";
         }
 
         private void Game_Music() {
@@ -146,14 +148,14 @@ namespace Tetrics
 
             while (!gameState.GameOver) {
 
-                int delay = Math.Max(minDelay, maxDelay - (gameState.Score * DelayDecrease));
+                int delay = gameState.Score.CurrentSpeed();
                 await Task.Delay(delay);
                 gameState.MoveBlockDown();
                 Draw(gameState);
             }
 
             GameOverMenu.Visibility = Visibility.Visible;
-            FinalScoreText.Text = $"Score: {gameState.Score}";
+            FinalScoreText.Text = $"Score: {gameState.Score.Score}";
         }
 
 
@@ -162,7 +164,10 @@ namespace Tetrics
             if (gameState.GameOver) _ = e.Handled;
 
             if (Keyboard.IsKeyDown(Key.Up)) gameState.RotateBlock();
-            if (Keyboard.IsKeyDown(Key.Down)) gameState.MoveBlockDown();
+            if (Keyboard.IsKeyDown(Key.Down)) {
+                gameState.MoveBlockDown();
+                gameState.Score.Score += 1;
+            };
             if (Keyboard.IsKeyDown(Key.Left)) gameState.MoveBlockleft();
             if (Keyboard.IsKeyDown(Key.Right)) gameState.MoveBlockRight();
             if (Keyboard.IsKeyDown(Key.X)) gameState.RotateInverseBlock();
