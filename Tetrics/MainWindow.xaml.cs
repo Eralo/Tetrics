@@ -133,9 +133,9 @@ namespace Tetrics
         }
 
         private void Game_Music() {
-            MediaPlayer mediaPlayer = new MediaPlayer();
-            mediaPlayer.Open(new Uri(System.Environment.CurrentDirectory + @"\Assets\music_theme.mp3"));
-            mediaPlayer.Play();
+            SoundPlayer Music = new SoundPlayer(/*System.Environment.CurrentDirectory + */@"C:\Users\damie\Desktop\repos2\Tetrics\Tetrics\Assets\music_theme.wav");
+            Music.Load();
+            Music.PlayLooping();
         }
 			    
 
@@ -174,13 +174,13 @@ namespace Tetrics
         }
 
         private async void GameCanvas_Loaded(object sender, RoutedEventArgs e) {
+            Game_Music();
             await GameLoop();
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e) {
             gameState = new GameState();
             GameOverMenu.Visibility = Visibility.Hidden;
-            Game_Music();
             await GameLoop();
         }
     }
