@@ -87,10 +87,9 @@ namespace Tetrics {
                 if (BlockFits()) return;
                 if (i != 0) CurrentBlock.Move(-CurrentBlock.Kick[CurrentBlock.rotationState][i], -CurrentBlock.Kick[CurrentBlock.rotationState][i + 1]);
             }
-
             CurrentBlock.RotateInverse();
-    
         }
+
         public void RotateInverseBlock() {
 
             CurrentBlock.RotateInverse();
@@ -134,8 +133,8 @@ namespace Tetrics {
 
             int i = GameGrid.ClearFullRows();
             if (i == 0) Combo = 0;
-
-            Score.AddScore(i, Combo);
+            else if (CurrentBlock.Id == 6) TSpinCheck(i);
+            else Score.AddScore(i, Combo);
 
             if (IsGameOver()) GameOver = true;
             else {
@@ -171,11 +170,29 @@ namespace Tetrics {
         }
 
         public void DropBlock() {
-            int score = BlockDropDistance();
+            int score = BlockDropDistance(); 
             Score.Score += 2 * BlockDropDistance(); 
 
             CurrentBlock.Move(score, 0);
             PlaceBlock();
+        }
+
+        public void TSpinCheck(int lines) {
+
+            CurrentBlock.Move(1,0);
+            if (BlockFits()) {
+
+                CurrentBlock.Move(-1, -1);  //take into account last movement
+                if (BlockFits()) {
+
+                    CurrentBlock.Move(0, 2);    //same here
+                    if (BlockFits()) {
+
+                        CurrentBlock.Move(0, -1);
+                        Score.Tspin(lines, Combo);
+                    }
+                }
+            }
         }
     }
 }

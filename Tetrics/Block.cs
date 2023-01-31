@@ -19,7 +19,7 @@ namespace Tetrics {
 
         public int rotationState;
 
-        private Position offset;
+        public Position offset;
 
         public Block() {
 
