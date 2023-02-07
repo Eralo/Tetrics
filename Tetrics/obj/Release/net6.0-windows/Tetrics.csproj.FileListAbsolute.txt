@@ -6,7 +6,6 @@ C:\Users\damie\Desktop\repos2\Tetrics\Tetrics\bin\Release\net6.0-windows\Tetrics
 C:\Users\damie\Desktop\repos2\Tetrics\Tetrics\obj\Release\net6.0-windows\Tetrics.csproj.AssemblyReference.cache
 C:\Users\damie\Desktop\repos2\Tetrics\Tetrics\obj\Release\net6.0-windows\MainWindow.g.cs
 C:\Users\damie\Desktop\repos2\Tetrics\Tetrics\obj\Release\net6.0-windows\App.g.cs
-C:\Users\damie\Desktop\repos2\Tetrics\Tetrics\obj\Release\net6.0-windows\Tetrics_Content.g.cs
 C:\Users\damie\Desktop\repos2\Tetrics\Tetrics\obj\Release\net6.0-windows\Tetrics_MarkupCompile.cache
 C:\Users\damie\Desktop\repos2\Tetrics\Tetrics\obj\Release\net6.0-windows\Tetrics_MarkupCompile.lref
 C:\Users\damie\Desktop\repos2\Tetrics\Tetrics\obj\Release\net6.0-windows\MainWindow.baml
@@ -20,3 +19,5 @@ C:\Users\damie\Desktop\repos2\Tetrics\Tetrics\obj\Release\net6.0-windows\refint\
 C:\Users\damie\Desktop\repos2\Tetrics\Tetrics\obj\Release\net6.0-windows\Tetrics.pdb
 C:\Users\damie\Desktop\repos2\Tetrics\Tetrics\obj\Release\net6.0-windows\Tetrics.genruntimeconfig.cache
 C:\Users\damie\Desktop\repos2\Tetrics\Tetrics\obj\Release\net6.0-windows\ref\Tetrics.dll
+C:\Users\damie\Desktop\repos2\Tetrics\Tetrics\bin\Release\net6.0-windows\Assets\line_clear.wav
+C:\Users\damie\Desktop\repos2\Tetrics\Tetrics\bin\Release\net6.0-windows\Assets\music_theme.wav

@@ -11,14 +11,9 @@
   <ItemGroup>
     <None Remove="Assets\Background.png" />
     <None Remove="Assets\Block-Empty.png" />
-    <None Remove="Assets\Block-I.png" />
-    <None Remove="Assets\Block-J.png" />
-    <None Remove="Assets\Block-L.png" />
-    <None Remove="Assets\Block-O.png" />
-    <None Remove="Assets\Block-S.png" />
-    <None Remove="Assets\Block-T.png" />
-    <None Remove="Assets\Block-Z.png" />
     <None Remove="Assets\Icon.ico" />
+    <None Remove="Assets\line_clear.wav" />
+    <None Remove="Assets\music_theme.wav" />
     <None Remove="Assets\TileBlue.png" />
     <None Remove="Assets\TileCyan.png" />
     <None Remove="Assets\TileEmpty.png" />
@@ -27,10 +22,6 @@
     <None Remove="Assets\TilePurple.png" />
     <None Remove="Assets\TileRed.png" />
     <None Remove="Assets\TileYellow.png" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="Assets\Icon.ico" />
   </ItemGroup>
 
   <ItemGroup>
@@ -44,6 +35,12 @@
     <Resource Include="Assets\Block-T.png" />
     <Resource Include="Assets\Block-Z.png" />
     <Resource Include="Assets\Icon.ico" />
+    <EmbeddedResource Include="Assets\line_clear.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Assets\music_theme.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Resource Include="Assets\TileBlue.png" />
     <Resource Include="Assets\TileCyan.png" />
     <Resource Include="Assets\TileEmpty.png" />

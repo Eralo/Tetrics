@@ -36,6 +36,8 @@ namespace Tetrics {
         int CurrentLinger = 0;
         public int Combo { get; private set; } = 0;
 
+        public event EventHandler Clear;
+
         public GameState() {
 
             GameGrid = new GameGrid(22, 10);
@@ -133,8 +135,12 @@ namespace Tetrics {
 
             int i = GameGrid.ClearFullRows();
             if (i == 0) Combo = 0;
-            else if (CurrentBlock.Id == 6) TSpinCheck(i);
-            else Score.AddScore(i, Combo);
+
+            if (CurrentBlock.Id == 6 && TSpinCheck()) Score.Tspin(i, Combo);
+            else if (i > 0){
+                Score.AddScore(i, Combo);
+                Clear.Invoke(i, EventArgs.Empty);
+            }
 
             if (IsGameOver()) GameOver = true;
             else {
@@ -177,22 +183,23 @@ namespace Tetrics {
             PlaceBlock();
         }
 
-        public void TSpinCheck(int lines) {
+        public bool TSpinCheck() {
 
-            CurrentBlock.Move(1,0);
-            if (BlockFits()) {
+            CurrentBlock.Move(-1,0);
+            if (!BlockFits()) {
 
-                CurrentBlock.Move(-1, -1);  //take into account last movement
-                if (BlockFits()) {
+                CurrentBlock.Move(1, -1);  //take into account last movement
+                if (!BlockFits()) {
 
                     CurrentBlock.Move(0, 2);    //same here
-                    if (BlockFits()) {
+                    if (!BlockFits()) {
 
                         CurrentBlock.Move(0, -1);
-                        Score.Tspin(lines, Combo);
+                        return true;
                     }
                 }
             }
+            return false;
         }
     }
 }

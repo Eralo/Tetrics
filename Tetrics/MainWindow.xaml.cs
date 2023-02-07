@@ -47,7 +47,8 @@ namespace Tetrics
             new BitmapImage(new Uri("Assets/Block-Z.png", UriKind.Relative)),
         };
 
-        private readonly MediaPlayer mediaPlayer = new MediaPlayer();
+        private Music Music = new Music();
+
 
         private readonly Image[,] imageControls;
         private readonly int maxDelay = 1000;
@@ -55,10 +56,11 @@ namespace Tetrics
         private readonly int DelayDecrease = 25;
 
         private GameState gameState = new GameState();
-        public MainWindow()
-        {
+        public MainWindow() {
+
             InitializeComponent();
             imageControls = SetupGameCanvas(gameState.GameGrid);
+            gameState.Clear += GameState_Clear;
         }
 
         private Image[,] SetupGameCanvas(GameGrid grid) {
@@ -135,9 +137,8 @@ namespace Tetrics
         }
 
         private void Game_Music() {
-            SoundPlayer Music = new SoundPlayer(/*System.Environment.CurrentDirectory + */@"C:\Users\damie\Desktop\repos2\Tetrics\Tetrics\Assets\music_theme.wav");
-            Music.Load();
-            Music.PlayLooping();
+
+            Music.Game_Theme();
         }
 			    
 
@@ -157,6 +158,7 @@ namespace Tetrics
             GameOverMenu.Visibility = Visibility.Visible;
             FinalScoreText.Text = $"Score: {gameState.Score.Score}";
         }
+
 
 
         private async void Window_KeyDown(object sender, KeyEventArgs e) {
@@ -186,7 +188,11 @@ namespace Tetrics
         private async void Button_Click(object sender, RoutedEventArgs e) {
             gameState = new GameState();
             GameOverMenu.Visibility = Visibility.Hidden;
+            gameState.Clear += GameState_Clear;
             await GameLoop();
+        }
+        private void GameState_Clear(object? sender, EventArgs e) {
+            Music.Clear();
         }
     }
 }

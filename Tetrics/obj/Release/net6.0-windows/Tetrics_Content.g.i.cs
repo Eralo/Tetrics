@@ -8,6 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/icon.ico")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/line_clear.wav")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/music_theme.wav")]
 
 
