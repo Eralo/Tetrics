@@ -13,8 +13,8 @@ namespace Tetrics {
 
         private readonly Uri[] SoundsTable = new Uri[] {
 
-            new Uri(@"C:\Users\damie\Desktop\repos2\Tetrics\Tetrics\Assets\music_theme.wav"),
-            new Uri(@"C:\Users\damie\Desktop\repos2\Tetrics\Tetrics\Assets\line_clear.wav"),
+            new Uri(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Assets", "music_theme.wav")),
+            new Uri(Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "Assets", "music_theme.wav")),
         };
 
 

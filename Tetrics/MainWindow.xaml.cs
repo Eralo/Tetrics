@@ -136,13 +136,6 @@ namespace Tetrics
             LinesText.Text = $"Lines left: {gameState.Score.LinesLeft()}";
         }
 
-        private void Game_Music() {
-
-            Music.Game_Theme();
-        }
-			    
-
-
     private async Task GameLoop() {
 
             Draw(gameState);
@@ -181,7 +174,7 @@ namespace Tetrics
         }
 
         private async void GameCanvas_Loaded(object sender, RoutedEventArgs e) {
-            Game_Music();
+            Music.Game_Theme();
             await GameLoop();
         }
 
