@@ -49,13 +49,16 @@ namespace Tetrics
 
         private Music Music = new Music();
 
+        private GameState gameState = new GameState();
 
         private readonly Image[,] imageControls;
+
+        private bool pause = false;
+
         private readonly int maxDelay = 1000;
         private readonly int minDelay = 75;
         private readonly int DelayDecrease = 25;
 
-        private GameState gameState = new GameState();
         public MainWindow() {
 
             InitializeComponent();
@@ -140,16 +143,16 @@ namespace Tetrics
 
             Draw(gameState);
 
-            while (!gameState.GameOver) {
+            while (!gameState.GameOver && !pause) {
 
                 int delay = gameState.Score.CurrentSpeed();
                 await Task.Delay(delay);
                 gameState.MoveBlockDown();
                 Draw(gameState);
             }
-
             GameOverMenu.Visibility = Visibility.Visible;
             FinalScoreText.Text = $"Score: {gameState.Score.Score}";
+            
         }
 
 
@@ -168,6 +171,7 @@ namespace Tetrics
             if (Keyboard.IsKeyDown(Key.X)) gameState.RotateInverseBlock();
             if (Keyboard.IsKeyDown(Key.C)) gameState.HoldBlock();
             if (Keyboard.IsKeyDown(Key.Space)) gameState.DropBlock();
+            if (Keyboard.IsKeyDown(Key.Escape)) pause = true;
             Draw(gameState);
 
             await Task.Delay(100);

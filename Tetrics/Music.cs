@@ -21,11 +21,21 @@ namespace Tetrics {
         private MediaPlayer MusicPlayer = new MediaPlayer();
         private MediaPlayer EffectPlayer = new MediaPlayer();
 
+        private void Volume(double i) {
+            MusicPlayer.Volume += i;
+        }
 
         public void Game_Theme() {
 
             MusicPlayer.Open(SoundsTable[0]);
             MusicPlayer.Play();
+        }
+
+        public async Task Pause() {
+            for (int i=0; i < 4; i++) {
+                Volume(-0.1);
+                await Task.Delay(500);
+            }
         }
 
         public void Clear() {
