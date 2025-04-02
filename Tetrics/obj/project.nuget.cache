@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "2Bre7TywEs2oYDqBwwiZePoleeNnPkgMHtuxnwyENLuKwVCQLevR7A4QkeYyRrXghuNmnVTP4BvR25g+G6ZODw==",
+  "dgSpecHash": "LTT6RaDuvw8=",
   "success": true,
-  "projectFilePath": "C:\\Users\\damie\\Desktop\\repos2\\Tetrics\\Tetrics\\Tetrics.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "/home/Eralo/Developpement/Tetrics/Tetrics/Tetrics.csproj",
+  "expectedPackageFiles": [
+    "/home/Eralo/.nuget/packages/microsoft.netcore.app.ref/6.0.36/microsoft.netcore.app.ref.6.0.36.nupkg.sha512",
+    "/home/Eralo/.nuget/packages/microsoft.aspnetcore.app.ref/6.0.36/microsoft.aspnetcore.app.ref.6.0.36.nupkg.sha512",
+    "/home/Eralo/.nuget/packages/microsoft.netcore.app.host.linux-x64/6.0.36/microsoft.netcore.app.host.linux-x64.6.0.36.nupkg.sha512"
+  ],
   "logs": []
 }
