@@ -35,6 +35,7 @@ This game is very modular and can be easily extended (use of a lot of design pat
   -   SRS (Super Rotation System) allows for "advanced" rotation logic, such as wall kicks
   -   Reserve and preview next tetromino
   -   Bag randomizer generates balanced tetromino sequences
+  -   Leveling and scoring system
 
 - Very modular structure for game logic
 - Extendable architecture using patterns (Factory, Observer, etc.)
